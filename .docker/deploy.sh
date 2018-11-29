@@ -1,16 +1,15 @@
 #! /bin/sh
 
-BRANCH_NAME=`${CI_PROJECT_DIR}/.docker/ci.sh git branch | grep \* | cut -d ' ' -f2`
-echo "Branch name: ${BRANCH_NAME}"
+echo "Branch name: ${CI_COMMIT_REF_NAME}"
 
-case "${BRANCH_NAME}" in
+case "${CI_COMMIT_REF_NAME}" in
     release/*) RELEASE=true ;;
     *)  RELEASE=false ;;
 esac
 
 if [ $RELEASE = true ] ;
 then
-    VERSION=`echo $BRANCH_NAME | cut -d '/' -f 2`
+    VERSION=`echo $CI_COMMIT_REF_NAME | cut -d '/' -f 2`
     echo "Version: ${VERSION}"
 
     echo "Setting version in pom.xml..."

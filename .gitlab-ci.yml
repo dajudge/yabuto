@@ -13,4 +13,5 @@ stages:
 build:
   stage: build
   script:
-  - .docker/ci.sh mvn clean install
+  - .docker/build.sh
+  - .docker/deploy.sh

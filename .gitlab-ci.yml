@@ -1,0 +1,16 @@
+image: docker:latest
+
+cache:
+  paths:
+  - .cache/
+
+services:
+- docker:dind
+
+stages:
+- build
+
+build:
+  stage: build
+  script:
+  - .docker/ci.sh mvn clean install

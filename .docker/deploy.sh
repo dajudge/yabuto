@@ -11,6 +11,7 @@ if [ $RELEASE = true ] ;
 then
     VERSION=`echo $CI_COMMIT_REF_NAME | cut -d '/' -f 2`
     echo "Version: ${VERSION}"
+    echo "Bintray API user: $BINTRAY_API_USER"
 
     echo "Setting version in pom.xml..."
     ${CI_PROJECT_DIR}/.docker/ci.sh mvn -s /settings.xml versions:set -DnewVersion=${VERSION}

@@ -9,14 +9,9 @@ services:
 
 stages:
 - build
-- publish
 
 build:
   stage: build
   script:
   - ${CI_PROJECT_DIR}/.docker/build.sh
-
-publish:
-  stage: publish
-  script:
   - ${CI_PROJECT_DIR}/.docker/deploy.sh

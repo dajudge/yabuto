@@ -1,10 +1,10 @@
 #! /bin/sh
 
-BRANCH_NAME=`git branch | grep \* | cut -d ' ' -f2`
+BRANCH_NAME=`${CI_PROJECT_DIR}/.docker/ci.sh git branch | grep \* | cut -d ' ' -f2`
 echo "Branch name: ${BRANCH_NAME}"
 
 case "${BRANCH_NAME}" in
-    srelease/*) RELEASE=true ;;
+    release/*) RELEASE=true ;;
     *)  RELEASE=false ;;
 esac
 

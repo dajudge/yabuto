@@ -15,5 +15,5 @@ docker run --rm \
     -v "${CI_PROJECT_DIR}/.cache/.sonar":${HOME}/.sonar \
     -v /var/run/docker.sock:/var/run/docker.sock \
     --workdir /project \
-    $(docker build -q ${CI_PROJECT_DIR}/.docker/builder) \
+    $LOCAL $(docker build -q ${CI_PROJECT_DIR}/.docker/builder) \
     $@

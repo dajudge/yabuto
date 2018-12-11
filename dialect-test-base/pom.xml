@@ -9,7 +9,7 @@
         <artifactId>yabuto-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>dialect-openshift</artifactId>
+    <artifactId>dialect-test-base</artifactId>
     <packaging>jar</packaging>
 
     <build>
@@ -21,8 +21,8 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>addTestSources</goal>
-                            <goal>compileTests</goal>
+                            <goal>addSources</goal>
+                            <goal>compile</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -32,13 +32,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>dialect-k8s</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>dialect-test-base</artifactId>
-            <scope>test</scope>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <type>pom</type>
         </dependency>
     </dependencies>
 </project>

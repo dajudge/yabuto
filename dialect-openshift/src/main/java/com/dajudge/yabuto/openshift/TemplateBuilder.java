@@ -1,4 +1,4 @@
-package com.dajudge.ymlgen.testapi;
+package com.dajudge.yabuto.openshift;
 
 import com.dajudge.ymlgen.api.util.RootObjectBuilder;
 

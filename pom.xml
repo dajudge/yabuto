@@ -5,12 +5,15 @@
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.dajudge.yabuto</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>yabuto-parent</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.organization>dajudge-github</sonar.organization>
+        <xsonar.projectKey>dajudge_yabuto</xsonar.projectKey>
     </properties>
 
     <modules>
@@ -18,6 +21,7 @@
         <module>yabuto-maven-plugin</module>
         <module>dialect-openshift</module>
         <module>dialect-k8s</module>
+        <module>dialect-test-base</module>
     </modules>
 
     <distributionManagement>
@@ -39,8 +43,27 @@
                         <target>1.8</target>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M2</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.surefire</groupId>
+                            <artifactId>surefire-junit47</artifactId>
+                            <version>3.0.0-M2</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.4.0.905</version>
+            </plugin>
+        </plugins>
     </build>
 
     <dependencyManagement>
@@ -58,6 +81,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>dialect-k8s</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>dialect-test-base</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

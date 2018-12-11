@@ -6,11 +6,29 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.dajudge.yabuto</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>yabuto-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>dialect-k8s</artifactId>
     <packaging>jar</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>1.6.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>addTestSources</goal>
+                            <goal>compileTests</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
@@ -18,9 +36,9 @@
             <artifactId>api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <type>pom</type>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>dialect-test-base</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

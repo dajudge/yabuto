@@ -1,4 +1,4 @@
-package com.dajudge.yabuto.k8s;
+package com.dajudge.yabuto.openshift;
 
 import com.dajudge.ymlgen.api.util.ObjectBuilder;
 

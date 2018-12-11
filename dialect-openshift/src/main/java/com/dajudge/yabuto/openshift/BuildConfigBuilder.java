@@ -1,4 +1,4 @@
-package com.dajudge.ymlgen.testapi;
+package com.dajudge.yabuto.openshift;
 
 import com.dajudge.ymlgen.api.util.RootObjectBuilder;
 import groovy.lang.Closure;
@@ -19,12 +19,12 @@ public class BuildConfigBuilder extends RootObjectBuilder<BuildConfigBuilder> {
         return this;
     }
 
-    public BuildConfigBuilder sourceStrategy(Closure<Map<String, Object>> strategy) {
+    public BuildConfigBuilder sourceStrategy(Closure<?> strategy) {
         spec().put("sourceStrategy", callBuilderClosure(strategy, new SourceStrategyBuilder()));
         return this;
     }
 
-    public BuildConfigBuilder resources(Closure<Map<String, Object>> resources) {
+    public BuildConfigBuilder resources(Closure<?> resources) {
         spec().put("resources", callBuilderClosure(resources, new ResourcesBuilder()));
         return this;
     }

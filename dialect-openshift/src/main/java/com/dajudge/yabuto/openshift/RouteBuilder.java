@@ -1,4 +1,4 @@
-package com.dajudge.ymlgen.testapi;
+package com.dajudge.yabuto.openshift;
 
 import com.dajudge.ymlgen.api.util.RootObjectBuilder;
 import groovy.lang.Closure;
@@ -24,7 +24,7 @@ public class RouteBuilder extends RootObjectBuilder<RouteBuilder> {
         return this;
     }
 
-    public RouteBuilder tls(final Closure<Map<String, Object>> tls) {
+    public RouteBuilder tls(final Closure<?> tls) {
         spec().put("tls", callBuilderClosure(tls, new TlsBuilder()));
         return this;
     }

@@ -6,6 +6,8 @@ import groovy.lang.Closure;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import static groovy.lang.Closure.DELEGATE_FIRST;
+
 public final class ClosureUtil {
 
     private ClosureUtil() {
@@ -17,6 +19,7 @@ public final class ClosureUtil {
 
     public static Map<String, Object> callBuilderClosure(final Closure<?> closure, final ObjectBuilder<?> builder) {
         closure.setDelegate(builder);
+        closure.setResolveStrategy(DELEGATE_FIRST);
         closure.call();
         return builder.build();
     }

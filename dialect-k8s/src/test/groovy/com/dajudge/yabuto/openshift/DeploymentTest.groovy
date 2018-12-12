@@ -71,4 +71,31 @@ class DeploymentTest extends AbstractBaseRootObjectBuilderTest {
         assertEquals(1, secrets.size())
         assertEquals("lolcats", secrets[0].name)
     }
+
+    @Test
+    void sets_replicas() {
+        def result = underTest {
+            replicas 1
+        }
+
+        assertEquals(1, result.spec?.replicas)
+    }
+
+    @Test
+    void creates_rollingStrategy() {
+        def result = underTest {
+            rollingStrategy { }
+        }
+
+        assertEquals("Rolling", result.spec?.strategy?.type)
+    }
+
+    @Test
+    void creates_recreateStrategy() {
+        def result = underTest {
+            recreateStrategy { }
+        }
+
+        assertEquals("Recreate", result.spec?.strategy?.type)
+    }
 }

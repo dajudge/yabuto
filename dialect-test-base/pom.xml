@@ -32,9 +32,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <type>pom</type>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>api</artifactId>
         </dependency>
     </dependencies>
 </project>

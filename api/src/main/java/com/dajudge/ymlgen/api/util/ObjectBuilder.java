@@ -1,33 +1,33 @@
 package com.dajudge.ymlgen.api.util;
 
+import com.dajudge.ymlgen.api.features.ApiFeature;
+import com.dajudge.ymlgen.api.features.FeatureOwner;
+import groovy.lang.GroovyObjectSupport;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ObjectBuilder<T extends ObjectBuilder> {
+public class ObjectBuilder<T extends ObjectBuilder> extends GroovyObjectSupport {
+    private Map<String, ApiFeature> features = new HashMap<>();
 
-    protected Map<String, Object> object = new HashMap<>();
-
-    protected <T> T me() {
-        return (T) this;
+    protected FeatureOwner me() {
+        return new FeatureOwner((featureName, feature) -> features.put(featureName, feature));
     }
 
-    protected Map<String, Object> submap(final Map<String, Object> map, final String key) {
-        if (!map.containsKey(key)) {
-            map.put(key, new HashMap<String, Object>());
+    @Override
+    public Object invokeMethod(final String name, final Object args) {
+        if (features.containsKey(name)) {
+            features.get(name).invoke((Object[]) args);
+            return null;
         }
-        return (Map<String, Object>) map.get(key);
-    }
-
-    protected List<Object> sublist(final Map<String, Object> map, final String key) {
-        if (!map.containsKey(key)) {
-            map.put(key, new ArrayList<>());
-        }
-        return (List<Object>) map.get(key);
+        return super.invokeMethod(name, args);
     }
 
     public Map<String, Object> build() {
-        return object;
+        final Map<String, Object> ret = new HashMap<>();
+        features.values().forEach(it -> it.build(ret));
+        return ret;
     }
 }

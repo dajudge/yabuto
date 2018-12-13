@@ -1,10 +1,10 @@
-package com.dajudge.yabuto.openshift
+package com.dajudge.yabuto.k8s
 
 import com.dajudge.yabuto.testbase.AbstractBaseRootObjectBuilderTest
 import com.dajudge.ymlgen.api.Entrypoint
 import org.junit.Test
 
-import static com.dajudge.yabuto.openshift.KubernetesDialect.ENTRYPOINT_DEPLOYMENT
+import static com.dajudge.yabuto.k8s.KubernetesDialect.ENTRYPOINT_DEPLOYMENT
 import static com.dajudge.yabuto.testbase.DialectAsserts.assertKind
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertNotNull

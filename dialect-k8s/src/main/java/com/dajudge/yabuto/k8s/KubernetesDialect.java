@@ -1,5 +1,6 @@
-package com.dajudge.yabuto.openshift;
+package com.dajudge.yabuto.k8s;
 
+import com.dajudge.yabuto.k8s.deployment.DeploymentBuilder;
 import com.dajudge.ymlgen.api.Dialect;
 import com.dajudge.ymlgen.api.Entrypoint;
 import com.dajudge.ymlgen.api.Project;

@@ -1,5 +1,6 @@
-package com.dajudge.yabuto.openshift
+package com.dajudge.yabuto.k8s
 
+import com.dajudge.yabuto.k8s.deployment.DeploymentTemplateContainerBuilder
 import com.dajudge.yabuto.testbase.AbstractBaseSubBuilderTest
 import org.junit.Test
 

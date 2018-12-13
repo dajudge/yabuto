@@ -4,6 +4,7 @@ import com.dajudge.ymlgen.api.Entrypoint;
 import groovy.lang.Closure;
 
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static groovy.lang.Closure.DELEGATE_FIRST;
@@ -13,8 +14,8 @@ public final class ClosureUtil {
     private ClosureUtil() {
     }
 
-    public static Entrypoint root(final Supplier<? extends RootObjectBuilder<?>> builder) {
-        return p -> callBuilderClosure(from(p, 1), builder.get().name(from(p, 0)));
+    public static Entrypoint root(final Function<String, ? extends ObjectBuilder<?>> builder) {
+        return p -> callBuilderClosure(from(p, 1), builder.apply(from(p, 0)));
     }
 
     public static Map<String, Object> callBuilderClosure(final Closure<?> closure, final ObjectBuilder<?> builder) {

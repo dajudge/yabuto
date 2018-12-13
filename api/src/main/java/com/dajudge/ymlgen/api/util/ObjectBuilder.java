@@ -5,9 +5,7 @@ import com.dajudge.ymlgen.api.features.Builder;
 import com.dajudge.ymlgen.api.features.FeatureOwner;
 import groovy.lang.GroovyObjectSupport;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ObjectBuilder<T extends ObjectBuilder> extends GroovyObjectSupport implements Builder {

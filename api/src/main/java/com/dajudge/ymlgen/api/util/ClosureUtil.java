@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import static com.dajudge.ymlgen.api.features.Builder.callBuilderClosure;
 import static groovy.lang.Closure.DELEGATE_FIRST;
 
 public final class ClosureUtil {
@@ -16,13 +17,6 @@ public final class ClosureUtil {
 
     public static Entrypoint root(final Function<String, ? extends ObjectBuilder<?>> builder) {
         return p -> callBuilderClosure(from(p, 1), builder.apply(from(p, 0)));
-    }
-
-    public static Map<String, Object> callBuilderClosure(final Closure<?> closure, final ObjectBuilder<?> builder) {
-        closure.setDelegate(builder);
-        closure.setResolveStrategy(DELEGATE_FIRST);
-        closure.call();
-        return builder.build();
     }
 
     private static <T> T from(final Object[] o, int index) {

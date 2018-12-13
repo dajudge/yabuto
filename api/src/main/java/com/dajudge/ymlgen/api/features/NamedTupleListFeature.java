@@ -28,11 +28,11 @@ public class NamedTupleListFeature implements ApiFeature {
         final ArrayList<Object> entries = new ArrayList<>();
         target.put(listName, entries);
         argsList.forEach(args -> {
-            entries.add(new HashMap<String, Object>() {{
-                for (int i = 0; i < names.length; i++) {
-                    put(names[i], args[i]);
-                }
-            }});
+            final HashMap<String, Object> map = new HashMap<>();
+            for (int i = 0; i < names.length; i++) {
+                map.put(names[i], args[i]);
+            }
+            entries.add(map);
         });
     }
 }

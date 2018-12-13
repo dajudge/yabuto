@@ -1,6 +1,7 @@
 package com.dajudge.ymlgen.api.util;
 
 import com.dajudge.ymlgen.api.features.ApiFeature;
+import com.dajudge.ymlgen.api.features.Builder;
 import com.dajudge.ymlgen.api.features.FeatureOwner;
 import groovy.lang.GroovyObjectSupport;
 
@@ -9,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ObjectBuilder<T extends ObjectBuilder> extends GroovyObjectSupport {
+public class ObjectBuilder<T extends ObjectBuilder> extends GroovyObjectSupport implements Builder {
     private Map<String, ApiFeature> features = new HashMap<>();
 
     protected FeatureOwner me() {
@@ -25,6 +26,7 @@ public class ObjectBuilder<T extends ObjectBuilder> extends GroovyObjectSupport 
         return super.invokeMethod(name, args);
     }
 
+    @Override
     public Map<String, Object> build() {
         final Map<String, Object> ret = new HashMap<>();
         features.values().forEach(it -> it.build(ret));

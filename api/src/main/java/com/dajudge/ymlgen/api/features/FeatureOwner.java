@@ -58,6 +58,6 @@ public class FeatureOwner {
         return this;
     }
 
-    public interface BuilderFactory extends Function<Object[], ObjectBuilder<?>> {
+    public interface BuilderFactory extends Function<Object[], Builder> {
     }
 }

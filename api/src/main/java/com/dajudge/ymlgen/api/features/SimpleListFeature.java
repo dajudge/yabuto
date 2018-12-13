@@ -1,7 +1,8 @@
 package com.dajudge.ymlgen.api.features;
 
+import com.dajudge.ymlgen.api.util.MapBuilder;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ class SimpleListFeature<T> implements ApiFeature {
 
     @Override
     public final void build(final Map<String, Object> target) {
-        if(items.isEmpty()) {
+        if (items.isEmpty()) {
             return;
         }
         final List<Map<String, Object>> result = items.stream()
@@ -34,8 +35,8 @@ class SimpleListFeature<T> implements ApiFeature {
     }
 
     private Map<String, Object> valueMapper(final T it) {
-        return new HashMap<String, Object>() {{
-            put(itemName, it);
-        }};
+        return new MapBuilder<String, Object>()
+                .put(itemName, it)
+                .build();
     }
 }

@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.dajudge.yabuto</groupId>
-        <artifactId>yabuto-parent</artifactId>
+        <artifactId>parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>yabuto-maven-plugin</artifactId>

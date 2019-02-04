@@ -56,6 +56,8 @@ docker run --rm \
     -e https_proxy="$https_proxy" \
     -e no_proxy="$no_proxy" \
     -v "${CI_PROJECT_DIR}":/project \
+    -e BINTRAY_API_USER="$BINTRAY_API_USER" \
+    -e BINTRAY_API_KEY="$BINTRAY_API_KEY" \
     $MAVEN_OPTS_ENV \
     $MAVEN_HOME_MOUNT \
     $MAVEN_SETTINGS_MOUNT \

@@ -1,5 +1,6 @@
 package com.dajudge.ymlgen.api.features;
 
+import com.dajudge.ymlgen.api.exceptions.YabutoException;
 import groovy.lang.Closure;
 
 import java.util.Map;
@@ -19,7 +20,11 @@ class BuilderFeature implements ApiFeature {
 
     @Override
     public void invoke(final Object[] args) {
-        result = callBuilderClosure((Closure<?>) args[args.length-1], factory.apply(args));
+        try {
+            result = callBuilderClosure((Closure<?>) args[args.length - 1], factory.apply(args));
+        } catch (final Exception e) {
+            throw new YabutoException("Failed to invoke closure on '" + itemName + "'", e);
+        }
     }
 
     @Override

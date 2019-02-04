@@ -14,9 +14,9 @@ then
     echo "Bintray API user: $BINTRAY_API_USER"
 
     echo "Setting version in pom.xml..."
-    ${CI_PROJECT_DIR}/.docker/ci.sh mvn -s /settings.xml versions:set -DnewVersion=${VERSION}
+    ${CI_PROJECT_DIR}/.docker/ci-env.sh ${CI_PROJECT_DIR}/.docker/ci.sh mvn versions:set -DnewVersion=${VERSION}
     echo "Publishing to bintray..."
-    ${CI_PROJECT_DIR}/.docker/ci.sh mvn -s /settings.xml clean install deploy -DskipTests
+    ${CI_PROJECT_DIR}/.docker/ci-env.sh ${CI_PROJECT_DIR}/.docker/ci.sh mvn clean install deploy -DskipTests
 else
     echo "Not publishing to bintray."
 fi

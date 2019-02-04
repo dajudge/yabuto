@@ -5,6 +5,8 @@ import com.dajudge.ymlgen.api.util.ObjectBuilder;
 
 import java.util.Map;
 
+import static com.dajudge.ymlgen.api.util.SafeCasts.string;
+
 public class ResourcesBuilder extends ObjectBuilder<ResourcesBuilder> {
     private ResourcesBuilder() {
         me().child("limits").custom("limits", new QuotaFeature());
@@ -20,8 +22,8 @@ public class ResourcesBuilder extends ObjectBuilder<ResourcesBuilder> {
 
         @Override
         public void invoke(final Object[] args) {
-            cpu = (String) args[0];
-            memory = (String) args[1];
+            cpu = string(args[0]);
+            memory = string(args[1]);
         }
 
         @Override

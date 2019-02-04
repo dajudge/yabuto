@@ -3,8 +3,11 @@ package com.dajudge.ymlgen.api.features;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.dajudge.ymlgen.api.util.SafeCasts.string;
+import static java.util.Arrays.asList;
+
 public class KeyValueFeature implements ApiFeature {
-    private static final Map<String, Object> values = new HashMap<>();
+    private final Map<String, Object> values = new HashMap<>();
     private final String featureName;
 
     public KeyValueFeature(final String featureName) {
@@ -13,7 +16,7 @@ public class KeyValueFeature implements ApiFeature {
 
     @Override
     public void invoke(final Object[] args) {
-        values.put((String) args[0], args[1]);
+        values.put(string(args[0]), args[1]);
     }
 
     @Override

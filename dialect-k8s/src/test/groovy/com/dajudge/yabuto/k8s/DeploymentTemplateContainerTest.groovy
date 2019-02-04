@@ -26,7 +26,9 @@ class DeploymentTemplateContainerTest extends AbstractBaseSubBuilderTest<Deploym
     @Test
     void sets_container_port() {
         def result = underTest {
-            containerPort 80
+            port {
+                containerPort 80
+            }
         }
 
         List ports = result.ports

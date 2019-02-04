@@ -62,7 +62,9 @@ class DeploymentTest extends AbstractBaseRootObjectBuilderTest {
     void adds_imagePullSecrets() {
         def result = underTest {
             template {
-                imagePullSecret "lolcats"
+                imagePullSecret {
+                    name "lolcats"
+                }
             }
         }
 

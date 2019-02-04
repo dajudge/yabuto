@@ -6,6 +6,8 @@ import com.dajudge.ymlgen.api.util.ObjectBuilder;
 
 import java.util.Map;
 
+import static com.dajudge.ymlgen.api.util.SafeCasts.string;
+
 public class SourceStrategyBuilder extends ObjectBuilder<SourceStrategyBuilder> {
     private SourceStrategyBuilder() {
         me().child("from")
@@ -18,13 +20,13 @@ public class SourceStrategyBuilder extends ObjectBuilder<SourceStrategyBuilder> 
     }
 
     private static class FromImageStreamTagFeature implements ApiFeature {
-        String name;
-        String namespace;
+        private String name;
+        private String namespace;
 
         @Override
         public void invoke(final Object[] args) {
-            name = (String) args[0];
-            namespace = (String) args[1];
+            name = string(args[0]);
+            namespace = string(args[1]);
         }
 
         @Override

@@ -1,11 +1,9 @@
 package com.dajudge.ymlgen.api.features;
 
-import com.dajudge.ymlgen.api.util.ObjectBuilder;
-
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-public class FeatureOwner {
+public final class FeatureOwner {
     private final BiConsumer<String, ApiFeature> featureSink;
 
     public FeatureOwner(final BiConsumer<String, ApiFeature> featureSink) {
@@ -31,10 +29,9 @@ public class FeatureOwner {
     public <K> FeatureOwner simpleList(
             final String featureName,
             final String listName,
-            final String itemName,
             final Class<K> clazz
     ) {
-        custom(featureName, new SimpleListFeature<K>(listName, itemName));
+        custom(featureName, new SimpleListFeature<K>(listName));
         return this;
     }
 

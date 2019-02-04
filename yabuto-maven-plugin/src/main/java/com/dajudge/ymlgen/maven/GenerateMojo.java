@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.stream.Stream;
 
+import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.StreamSupport.stream;
 import static org.apache.maven.plugins.annotations.ResolutionScope.COMPILE;
@@ -37,10 +38,12 @@ public class GenerateMojo extends AbstractMojo {
 
     @Component
     MavenProject mavenProject;
-    @Parameter
+    @Parameter(required = true)
     File templatesDir;
-    @Parameter
+    @Parameter(required = true)
     File targetDir;
+    @Parameter
+    Map<String, String> parameters;
 
     public void execute() throws MojoExecutionException {
         final ClassLoader cl = createClassLoader();
@@ -50,7 +53,6 @@ public class GenerateMojo extends AbstractMojo {
                 .filter(it -> it.getName().endsWith(EXT))
                 .collect(toList());
         targetDir.mkdirs();
-        final Project project = createProject(cl);
         for (final File file : files) {
             final String sourceName = file.getName();
             final String templateName = sourceName.substring(0, sourceName.length() - EXT.length());
@@ -60,7 +62,9 @@ public class GenerateMojo extends AbstractMojo {
                     final OutputStreamWriter writer = new OutputStreamWriter(fos);
                     final PrintWriter print = new PrintWriter(writer);
             ) {
-                evaluate(cl, file, apiModules, print, project);
+                final Project project = createProject(cl);
+                final Map<String, Entrypoint> apis = collectApiEndpoints(apiModules, project);
+                evaluate(cl, file, print, apis);
             } catch (final IOException e) {
                 throw new MojoExecutionException("Failed to evaluate template.", e);
             }
@@ -77,6 +81,11 @@ public class GenerateMojo extends AbstractMojo {
             @Override
             public ClassLoader getClassLoader() {
                 return cl;
+            }
+
+            @Override
+            public Map<String, String> getParams() {
+                return parameters == null ? emptyMap() : new HashMap<>(parameters);
             }
         };
     }
@@ -95,22 +104,21 @@ public class GenerateMojo extends AbstractMojo {
         }
     }
 
-    private void evaluate(
-            final ClassLoader cl,
-            final File script,
-            final ServiceLoader<Dialect> apiModules,
-            final PrintWriter out,
-            final Project project
-    ) throws MojoExecutionException {
+    private Map<String, Entrypoint> collectApiEndpoints(ServiceLoader<Dialect> apiModules, Project project) {
+        final Map<String, Entrypoint> apis = new HashMap<>();
+        stream(apiModules.spliterator(), false)
+                .forEach(it -> apis.putAll(it.getEntrypoints(project)));
+        return apis;
+    }
+
+    private void evaluate(ClassLoader cl, File script, PrintWriter out, Map<String, Entrypoint> apis) throws MojoExecutionException {
         try {
-            final Map<String, Entrypoint> apis = new HashMap<>();
-            stream(apiModules.spliterator(), false)
-                    .forEach(it -> apis.putAll(it.getEntrypoints(project)));
             final DumperOptions options = new DumperOptions();
             options.setIndent(2);
             options.setPrettyFlow(true);
             options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-            new Yaml(options).dump(YamlBuildScript.run(cl, apis, script), out);
+            final Map<String, Object> yaml = YamlBuildScript.run(cl, apis, script);
+            new Yaml(options).dump(yaml, out);
         } catch (final Exception e) {
             throw new MojoExecutionException("Failed to evaluate Yaml builder.", e);
         }

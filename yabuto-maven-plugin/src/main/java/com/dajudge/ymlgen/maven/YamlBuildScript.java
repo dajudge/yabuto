@@ -14,13 +14,14 @@ import static com.dajudge.ymlgen.api.util.StreamUtil.loadUtf8FromResource;
 
 public abstract class YamlBuildScript extends Script {
     private Map<String, Entrypoint> apis;
+    private ClassLoader scriptClassLoader;
 
     @Override
     public Object invokeMethod(String name, Object args) {
         if (name.equals("include")) {
             final String scriptName = ((Object[]) args)[0].toString() + ".groovy";
             try {
-                return run(getClass().getClassLoader(), apis, parserFor(scriptName));
+                return run(scriptClassLoader, apis, parserFor(scriptName));
             } catch (IOException e) {
                 throw new RuntimeException("Failed to evaluate library " + scriptName, e);
             }
@@ -37,7 +38,7 @@ public abstract class YamlBuildScript extends Script {
     }
 
     private String load(final String file) {
-        return loadUtf8FromResource(file, getClass().getClassLoader());
+        return loadUtf8FromResource(file, scriptClassLoader);
     }
 
     private interface Parser {
@@ -61,6 +62,7 @@ public abstract class YamlBuildScript extends Script {
         config.setScriptBaseClass(YamlBuildScript.class.getName());
         final GroovyShell shell = new GroovyShell(classLoader, new Binding(), config);
         final YamlBuildScript script = (YamlBuildScript) parser.parse(shell);
+        script.scriptClassLoader = classLoader;
         script.apis = apis;
         return script.run();
     }

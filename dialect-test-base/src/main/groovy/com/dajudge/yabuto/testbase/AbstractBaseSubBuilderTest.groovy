@@ -6,7 +6,9 @@ import static com.dajudge.ymlgen.api.features.Builder.callBuilderClosure
 
 abstract class AbstractBaseSubBuilderTest<T extends ObjectBuilder> {
     Map<String, Object> underTest(Closure closure) {
-        callBuilderClosure(closure, createBuilderUnderTest())
+        def builder = createBuilderUnderTest()
+        callBuilderClosure(closure, builder)
+        builder.build()
     }
 
     abstract T createBuilderUnderTest()

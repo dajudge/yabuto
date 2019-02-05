@@ -21,7 +21,9 @@ class BuilderFeature implements ApiFeature {
     @Override
     public void invoke(final Object[] args) {
         try {
-            result = callBuilderClosure((Closure<?>) args[args.length - 1], factory.apply(args));
+            final Builder builder = factory.apply(args);
+            callBuilderClosure((Closure<?>) args[args.length - 1], builder);
+            result = builder.build();
         } catch (final Exception e) {
             throw new YabutoException("Failed to invoke closure on '" + itemName + "'", e);
         }

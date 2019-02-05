@@ -36,7 +36,7 @@ class BuildConfigTest extends AbstractBaseRootObjectBuilderTest {
                 env "name", "value"
             }
         }
-        List env = result.spec?.sourceStrategy?.env
+        List env = result.spec?.strategy?.sourceStrategy?.env
         assertNotNull(env)
         assertEquals([[
                               name : "name",
@@ -73,7 +73,7 @@ class BuildConfigTest extends AbstractBaseRootObjectBuilderTest {
             }
         }
 
-        def from = result.spec?.sourceStrategy?.from
+        def from = result.spec?.strategy?.sourceStrategy?.from
         assertNotNull(from)
         assertEquals("imageName", from.name)
         assertEquals("namespaceName", from.namespace)

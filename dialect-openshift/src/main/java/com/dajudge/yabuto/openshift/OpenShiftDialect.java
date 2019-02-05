@@ -1,6 +1,7 @@
 package com.dajudge.yabuto.openshift;
 
 import com.dajudge.yabuto.openshift.build.BuildConfigBuilder;
+import com.dajudge.yabuto.openshift.configmap.ConfigMapBuilder;
 import com.dajudge.yabuto.openshift.deploymentconfig.DeploymentConfigBuilder;
 import com.dajudge.yabuto.openshift.imagestream.ImageStreamBuilder;
 import com.dajudge.yabuto.openshift.route.RouteBuilder;
@@ -22,6 +23,7 @@ public class OpenShiftDialect implements Dialect {
     static final String ENTRYPOINT_ROUTE = "route";
     static final String ENTRYPOINT_IMAGESTREAM = "imageStream";
     static final String ENTRYPOINT_SERVICE = "service";
+    static final String ENTRYPOINT_CONFIGMAP = "configMap";
 
     @Override
     public Map<String, Entrypoint> getEntrypoints(final Project project) {
@@ -32,6 +34,7 @@ public class OpenShiftDialect implements Dialect {
                 .put(ENTRYPOINT_DEPLOYMENTCONFIG, root(DeploymentConfigBuilder::new))
                 .put(ENTRYPOINT_IMAGESTREAM, root(ImageStreamBuilder::new))
                 .put(ENTRYPOINT_SERVICE, root(ServiceBuilder::new))
+                .put(ENTRYPOINT_CONFIGMAP, root(ConfigMapBuilder::new))
                 .build();
     }
 }

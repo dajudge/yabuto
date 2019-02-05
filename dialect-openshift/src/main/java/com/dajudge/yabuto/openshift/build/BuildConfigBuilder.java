@@ -10,8 +10,8 @@ public class BuildConfigBuilder extends RootObjectBuilder<BuildConfigBuilder> {
     public BuildConfigBuilder(final String name) {
         super("BuildConfig", "v1", name);
         final FeatureOwner spec = me().child("spec")
-                .builder("sourceStrategy", "sourceStrategy", SourceStrategyBuilder::create)
-                .builder("dockerStrategy", "dockerStrategy", DockerStrategyBuilder::create)
+                .builder("sourceStrategy", "strategy", SourceStrategyBuilder::create)
+                .builder("dockerStrategy", "strategy", DockerStrategyBuilder::create)
                 .builder("resources", "resources", ResourcesBuilder::create);
         spec.child("output").child("to")
                 .custom("outputToImageStreamTag", new ImageStreamTagFeature());

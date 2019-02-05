@@ -8,10 +8,14 @@ import static com.dajudge.ymlgen.api.util.SafeCasts.string;
 
 public class ImageStreamTagFeature implements ApiFeature {
     private String name;
+    private String namespace;
 
     @Override
     public void invoke(final Object[] args) {
         name = string(args[0]);
+        if (args.length > 1) {
+            namespace = string(args[1]);
+        }
     }
 
     @Override
@@ -19,6 +23,9 @@ public class ImageStreamTagFeature implements ApiFeature {
         if (name != null) {
             target.put("kind", "ImageStreamTag");
             target.put("name", name);
+            if (namespace != null) {
+                target.put("namespace", namespace);
+            }
         }
     }
 }

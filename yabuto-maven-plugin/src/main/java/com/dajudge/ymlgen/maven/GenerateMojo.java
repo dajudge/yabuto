@@ -111,7 +111,12 @@ public class GenerateMojo extends AbstractMojo {
         return apis;
     }
 
-    private void evaluate(ClassLoader cl, File script, PrintWriter out, Map<String, Entrypoint> apis) throws MojoExecutionException {
+    private void evaluate(
+            final ClassLoader cl,
+            final File script,
+            final PrintWriter out,
+            final Map<String, Entrypoint> apis
+    ) throws MojoExecutionException {
         try {
             final DumperOptions options = new DumperOptions();
             options.setIndent(2);
@@ -120,7 +125,7 @@ public class GenerateMojo extends AbstractMojo {
             final Map<String, Object> yaml = YamlBuildScript.run(cl, apis, script);
             new Yaml(options).dump(yaml, out);
         } catch (final Exception e) {
-            throw new MojoExecutionException("Failed to evaluate Yaml builder.", e);
+            throw new MojoExecutionException("Failed to evaluate " + script.getPath(), e);
         }
     }
 

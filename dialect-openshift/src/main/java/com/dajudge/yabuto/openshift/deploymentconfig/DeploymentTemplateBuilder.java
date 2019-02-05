@@ -9,7 +9,12 @@ class DeploymentTemplateBuilder extends ObjectBuilder<DeploymentTemplateBuilder>
     DeploymentTemplateBuilder() {
         me().keyValuePairs("label", "labels");
         me().child("spec")
-                .builderList("container", "containers", this::createContainerBuilder);
+                .builderList("container", "containers", this::createContainerBuilder)
+                .builderList("volume", "volumes", this::createVolumeBuidler);
+    }
+
+    private DeploymentTemplateVolumeBuilder createVolumeBuidler(final Object[] params) {
+        return new DeploymentTemplateVolumeBuilder(string(params[0]));
     }
 
     private DeploymentTemplateContainerBuilder createContainerBuilder(final Object[] params) {

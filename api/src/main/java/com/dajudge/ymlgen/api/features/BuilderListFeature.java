@@ -21,7 +21,9 @@ class BuilderListFeature implements ApiFeature {
 
     @Override
     public void invoke(final Object[] args) {
-        results.add(callBuilderClosure((Closure<?>) args[args.length-1], factory.apply(args)));
+        Builder builder = factory.apply(args);
+        callBuilderClosure(args[args.length-1], builder);
+        results.add(builder.build());
     }
 
     @Override

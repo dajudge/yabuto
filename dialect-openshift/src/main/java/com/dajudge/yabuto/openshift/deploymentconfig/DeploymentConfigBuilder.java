@@ -14,13 +14,12 @@ public class DeploymentConfigBuilder extends RootObjectBuilder<DeploymentConfigB
     public DeploymentConfigBuilder(final String name) {
         super("DeploymentConfig", "v1", name);
         final FeatureOwner spec = me().child("spec");
-        spec  .simpleValue("replicas", "replicas", null, int.class)
-                .builderList("trigger", "triggers", this::triggerBuilder)
+        spec.simpleValue("replicas", "replicas", null, int.class)
+                .keyValuePairs("selector", "selector")
+                .requiredBuilderList("trigger", "triggers", this::triggerBuilder)
                 .builder("template", "template", DeploymentTemplateBuilder::create)
                 .builder("rollingStrategy", "strategy", RollingDeploymentStrategyBuilder::create)
                 .builder("recreateStrategy", "strategy", RecreateDeploymentStrategyBuilder::create);
-        spec.child("from")
-                .custom("fromImageStreamTag", new ImageStreamTagFeature());
     }
 
     private Builder triggerBuilder(final Object[] params) {

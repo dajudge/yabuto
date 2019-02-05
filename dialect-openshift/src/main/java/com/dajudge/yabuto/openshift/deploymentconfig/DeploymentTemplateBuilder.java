@@ -1,13 +1,13 @@
 package com.dajudge.yabuto.openshift.deploymentconfig;
 
+import com.dajudge.yabuto.k8s.base.MetadataObjectBuilder;
 import com.dajudge.ymlgen.api.features.Builder;
 import com.dajudge.ymlgen.api.util.ObjectBuilder;
 
 import static com.dajudge.ymlgen.api.util.SafeCasts.string;
 
-class DeploymentTemplateBuilder extends ObjectBuilder<DeploymentTemplateBuilder> {
+class DeploymentTemplateBuilder extends MetadataObjectBuilder<DeploymentTemplateBuilder> {
     DeploymentTemplateBuilder() {
-        me().keyValuePairs("label", "labels");
         me().child("spec")
                 .builderList("container", "containers", this::createContainerBuilder)
                 .builderList("volume", "volumes", this::createVolumeBuidler);

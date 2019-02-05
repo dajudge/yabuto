@@ -46,7 +46,12 @@ public final class FeatureOwner {
     }
 
     public FeatureOwner builderList(final String featureName, final String listName, final BuilderFactory factory) {
-        custom(featureName, new BuilderListFeature(listName, factory));
+        custom(featureName, new BuilderListFeature(listName, factory, false));
+        return this;
+    }
+
+    public FeatureOwner requiredBuilderList(final String featureName, final String listName, final BuilderFactory factory) {
+        custom(featureName, new BuilderListFeature(listName, factory, true));
         return this;
     }
 

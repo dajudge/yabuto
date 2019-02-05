@@ -1,5 +1,7 @@
 package com.dajudge.ymlgen.api.features;
 
+import groovy.lang.GString;
+
 import java.io.File;
 import java.util.Map;
 
@@ -20,6 +22,8 @@ class SimpleValueFeature<T> implements ApiFeature {
     public void invoke(final Object[] args) {
         if (args[0] instanceof File) {
             this.value = readFromFile((File) args[0], clazz);
+        }else if(args[0] instanceof GString) {
+            this.value = (T)args[0].toString();
         } else {
             this.value = (T) args[0];
         }

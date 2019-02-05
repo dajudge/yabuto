@@ -18,7 +18,7 @@
 
     <modules>
         <module>api</module>
-        <module>yabuto-maven-plugin</module>
+        <module>yabuto-plugin</module>
         <module>dialect-openshift</module>
         <module>dialect-k8s</module>
         <module>dialect-test-base</module>

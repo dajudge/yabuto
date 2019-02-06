@@ -9,6 +9,8 @@
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>Yabuto ${project.artifactId}</name>
+    <description>A YAML building toolkit</description>
+    <url>https://github.com/dajudge/yabuto</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

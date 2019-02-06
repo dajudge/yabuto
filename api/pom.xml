@@ -11,6 +11,7 @@
     </parent>
     <artifactId>api</artifactId>
     <packaging>jar</packaging>
+    <name>Yabuto ${project.artifactId}</name>
 
     <dependencies>
         <dependency>

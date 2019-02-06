@@ -11,6 +11,7 @@
     </parent>
     <artifactId>dialect-openshift</artifactId>
     <packaging>jar</packaging>
+    <name>Yabuto ${project.artifactId}</name>
 
     <build>
         <plugins>

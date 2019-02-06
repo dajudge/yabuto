@@ -8,6 +8,7 @@
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
+    <name>Yabuto ${project.artifactId}</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,11 +19,23 @@
 
     <modules>
         <module>api</module>
-        <module>yabuto-plugin</module>
+        <module>yabuto-maven-plugin</module>
         <module>dialect-openshift</module>
         <module>dialect-k8s</module>
         <module>dialect-test-base</module>
     </modules>
+
+    <developers>
+        <developer>
+            <id>alexstockinger</id>
+            <name>Alex Stockinger</name>
+            <email>mail@alexstockinger.de</email>
+            <url>http://www.alexstockinger.de</url>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
 
     <distributionManagement>
         <repository>
@@ -30,6 +43,18 @@
             <url>https://api.bintray.com/maven/dajudge/yabuto/yabuto/</url>
         </repository>
     </distributionManagement>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/dajudge/yabuto</url>
+    </scm>
 
     <build>
         <pluginManagement>

@@ -17,7 +17,7 @@ public class PluginDialect implements Dialect {
     public Map<String, Entrypoint> getEntrypoints(final Project project) {
         return new MapBuilder<String, Entrypoint>()
                 .put("templatesDir", p -> project.getTemplatesDir())
-                .put("file", PluginDialect.this::file)
+                .put("file", params -> file(project, params))
                 .put("classpath", classpath(project.getClassLoader()))
                 .put("params", params(project.getParams()))
                 .build();
@@ -39,7 +39,7 @@ public class PluginDialect implements Dialect {
         };
     }
 
-    private File file(final Object[] params) {
-        return new File((File) params[0], (String) params[1]);
+    private File file(Project project, final Object[] params) {
+        return new File(project.getTemplatesDir(), string(params[0]));
     }
 }

@@ -2,7 +2,7 @@ package com.dajudge.yabuto.openshift
 
 
 import com.dajudge.yabuto.testbase.AbstractBaseRootObjectBuilderTest
-import com.dajudge.ymlgen.api.Entrypoint
+import com.dajudge.yabuto.api.Entrypoint
 import org.junit.Test
 
 import static com.dajudge.yabuto.openshift.OpenShiftDialect.ENTRYPOINT_DEPLOYMENTCONFIG

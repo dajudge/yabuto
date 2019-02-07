@@ -1,6 +1,6 @@
 package com.dajudge.yabuto.openshift.deploymentconfig;
 
-import com.dajudge.ymlgen.api.util.ObjectBuilder;
+import com.dajudge.yabuto.api.util.ObjectBuilder;
 
 class ConfigChangeTriggerBuilder extends ObjectBuilder<ConfigChangeTriggerBuilder> {
     ConfigChangeTriggerBuilder() {

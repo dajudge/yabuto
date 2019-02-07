@@ -1,6 +1,6 @@
 package com.dajudge.yabuto.k8s.deployment;
 
-import com.dajudge.ymlgen.api.util.ObjectBuilder;
+import com.dajudge.yabuto.api.util.ObjectBuilder;
 
 public class RecreateDeploymentStrategyBuilder extends ObjectBuilder<RecreateDeploymentStrategyBuilder> {
     private RecreateDeploymentStrategyBuilder() {

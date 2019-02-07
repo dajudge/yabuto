@@ -1,11 +1,11 @@
 package com.dajudge.yabuto.openshift.configmap;
 
-import com.dajudge.ymlgen.api.features.ApiFeature;
+import com.dajudge.yabuto.api.features.ApiFeature;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.dajudge.ymlgen.api.util.SafeCasts.string;
+import static com.dajudge.yabuto.api.util.SafeCasts.string;
 
 public class DataFeature implements ApiFeature {
     private Map<String, String> data = new HashMap<>();

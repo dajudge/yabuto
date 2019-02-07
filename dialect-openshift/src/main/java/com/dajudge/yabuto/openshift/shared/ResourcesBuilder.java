@@ -1,11 +1,11 @@
 package com.dajudge.yabuto.openshift.shared;
 
-import com.dajudge.ymlgen.api.features.ApiFeature;
-import com.dajudge.ymlgen.api.util.ObjectBuilder;
+import com.dajudge.yabuto.api.features.ApiFeature;
+import com.dajudge.yabuto.api.util.ObjectBuilder;
 
 import java.util.Map;
 
-import static com.dajudge.ymlgen.api.util.SafeCasts.string;
+import static com.dajudge.yabuto.api.util.SafeCasts.string;
 
 public class ResourcesBuilder extends ObjectBuilder<ResourcesBuilder> {
     private ResourcesBuilder() {

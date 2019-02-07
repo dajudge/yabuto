@@ -2,9 +2,9 @@ package com.dajudge.yabuto.openshift.deploymentconfig;
 
 import com.dajudge.yabuto.openshift.shared.EnvBuilder;
 import com.dajudge.yabuto.openshift.shared.PortBuilder;
-import com.dajudge.ymlgen.api.util.ObjectBuilder;
+import com.dajudge.yabuto.api.util.ObjectBuilder;
 
-import static com.dajudge.ymlgen.api.util.SafeCasts.string;
+import static com.dajudge.yabuto.api.util.SafeCasts.string;
 
 class DeploymentTemplateContainerBuilder extends ObjectBuilder<DeploymentTemplateContainerBuilder> {
     DeploymentTemplateContainerBuilder(final String name) {

@@ -3,7 +3,7 @@ package com.dajudge.yabuto.openshift.build;
 import com.dajudge.yabuto.k8s.base.RootObjectBuilder;
 import com.dajudge.yabuto.openshift.shared.ImageStreamTagFeature;
 import com.dajudge.yabuto.openshift.shared.ResourcesBuilder;
-import com.dajudge.ymlgen.api.features.FeatureOwner;
+import com.dajudge.yabuto.api.features.FeatureOwner;
 
 
 public class BuildConfigBuilder extends RootObjectBuilder<BuildConfigBuilder> {

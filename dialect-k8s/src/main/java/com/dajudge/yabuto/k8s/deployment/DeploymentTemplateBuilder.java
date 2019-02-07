@@ -1,7 +1,7 @@
 package com.dajudge.yabuto.k8s.deployment;
 
 import com.dajudge.yabuto.k8s.base.MetadataObjectBuilder;
-import com.dajudge.ymlgen.api.util.ObjectBuilder;
+import com.dajudge.yabuto.api.util.ObjectBuilder;
 
 public class DeploymentTemplateBuilder extends MetadataObjectBuilder<DeploymentTemplateBuilder> {
     public DeploymentTemplateBuilder() {

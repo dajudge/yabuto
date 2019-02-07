@@ -2,14 +2,8 @@ package com.dajudge.yabuto.openshift.build;
 
 import com.dajudge.yabuto.openshift.shared.EnvBuilder;
 import com.dajudge.yabuto.openshift.shared.ImageStreamTagFeature;
-import com.dajudge.ymlgen.api.features.ApiFeature;
-import com.dajudge.ymlgen.api.features.FeatureOwner;
-import com.dajudge.ymlgen.api.features.NamedTupleListFeature;
-import com.dajudge.ymlgen.api.util.ObjectBuilder;
-
-import java.util.Map;
-
-import static com.dajudge.ymlgen.api.util.SafeCasts.string;
+import com.dajudge.yabuto.api.features.FeatureOwner;
+import com.dajudge.yabuto.api.util.ObjectBuilder;
 
 public class SourceStrategyBuilder extends ObjectBuilder<SourceStrategyBuilder> {
     private SourceStrategyBuilder() {

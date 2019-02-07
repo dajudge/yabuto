@@ -1,10 +1,10 @@
 package com.dajudge.yabuto.openshift.shared;
 
-import com.dajudge.ymlgen.api.features.ApiFeature;
+import com.dajudge.yabuto.api.features.ApiFeature;
 
 import java.util.Map;
 
-import static com.dajudge.ymlgen.api.util.SafeCasts.string;
+import static com.dajudge.yabuto.api.util.SafeCasts.string;
 
 public class DockerImageFeature implements ApiFeature {
     private String name;

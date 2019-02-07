@@ -3,12 +3,11 @@ package com.dajudge.yabuto.openshift.deploymentconfig;
 import com.dajudge.yabuto.k8s.deployment.RecreateDeploymentStrategyBuilder;
 import com.dajudge.yabuto.k8s.deployment.RollingDeploymentStrategyBuilder;
 import com.dajudge.yabuto.k8s.base.RootObjectBuilder;
-import com.dajudge.yabuto.openshift.shared.ImageStreamTagFeature;
-import com.dajudge.ymlgen.api.exceptions.YabutoException;
-import com.dajudge.ymlgen.api.features.Builder;
-import com.dajudge.ymlgen.api.features.FeatureOwner;
+import com.dajudge.yabuto.api.exceptions.YabutoException;
+import com.dajudge.yabuto.api.features.Builder;
+import com.dajudge.yabuto.api.features.FeatureOwner;
 
-import static com.dajudge.ymlgen.api.util.SafeCasts.string;
+import static com.dajudge.yabuto.api.util.SafeCasts.string;
 
 public class DeploymentConfigBuilder extends RootObjectBuilder<DeploymentConfigBuilder> {
     public DeploymentConfigBuilder(final String name) {

@@ -1,6 +1,6 @@
 package com.dajudge.yabuto.openshift.route;
 
-import com.dajudge.ymlgen.api.util.ObjectBuilder;
+import com.dajudge.yabuto.api.util.ObjectBuilder;
 
 public class TlsBuilder extends ObjectBuilder<TlsBuilder> {
     private TlsBuilder() {

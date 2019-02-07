@@ -1,7 +1,7 @@
 package com.dajudge.yabuto.k8s
 
 import com.dajudge.yabuto.testbase.AbstractBaseRootObjectBuilderTest
-import com.dajudge.ymlgen.api.Entrypoint
+import com.dajudge.yabuto.api.Entrypoint
 import org.junit.Test
 
 import static com.dajudge.yabuto.k8s.KubernetesDialect.ENTRYPOINT_DEPLOYMENT

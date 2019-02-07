@@ -2,8 +2,8 @@ package com.dajudge.yabuto.openshift.build;
 
 import com.dajudge.yabuto.openshift.shared.DockerImageFeature;
 import com.dajudge.yabuto.openshift.shared.EnvBuilder;
-import com.dajudge.ymlgen.api.features.FeatureOwner;
-import com.dajudge.ymlgen.api.util.ObjectBuilder;
+import com.dajudge.yabuto.api.features.FeatureOwner;
+import com.dajudge.yabuto.api.util.ObjectBuilder;
 
 public class DockerStrategyBuilder extends ObjectBuilder<DockerStrategyBuilder> {
     private DockerStrategyBuilder() {

@@ -1,7 +1,6 @@
 package com.dajudge.yabuto.openshift.shared;
 
-import com.dajudge.yabuto.openshift.service.ServiceBuilder;
-import com.dajudge.ymlgen.api.util.ObjectBuilder;
+import com.dajudge.yabuto.api.util.ObjectBuilder;
 
 public class PortBuilder extends ObjectBuilder<PortBuilder> {
     public PortBuilder() {

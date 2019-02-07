@@ -7,14 +7,14 @@ import com.dajudge.yabuto.openshift.imagestream.ImageStreamBuilder;
 import com.dajudge.yabuto.openshift.route.RouteBuilder;
 import com.dajudge.yabuto.openshift.service.ServiceBuilder;
 import com.dajudge.yabuto.openshift.template.TemplateBuilder;
-import com.dajudge.ymlgen.api.Dialect;
-import com.dajudge.ymlgen.api.Entrypoint;
-import com.dajudge.ymlgen.api.Project;
-import com.dajudge.ymlgen.api.util.MapBuilder;
+import com.dajudge.yabuto.api.Dialect;
+import com.dajudge.yabuto.api.Entrypoint;
+import com.dajudge.yabuto.api.Project;
+import com.dajudge.yabuto.api.util.MapBuilder;
 
 import java.util.Map;
 
-import static com.dajudge.ymlgen.api.util.ClosureUtil.root;
+import static com.dajudge.yabuto.api.util.ClosureUtil.root;
 
 public class OpenShiftDialect implements Dialect {
     static final String ENTRYPOINT_DEPLOYMENTCONFIG = "deploymentConfig";

@@ -1,13 +1,13 @@
 package com.dajudge.yabuto.openshift.shared;
 
-import com.dajudge.ymlgen.api.features.ApiFeature;
-import com.dajudge.ymlgen.api.util.ObjectBuilder;
+import com.dajudge.yabuto.api.features.ApiFeature;
+import com.dajudge.yabuto.api.util.ObjectBuilder;
 import groovy.lang.GString;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.dajudge.ymlgen.api.util.SafeCasts.string;
+import static com.dajudge.yabuto.api.util.SafeCasts.string;
 
 public class EnvBuilder extends ObjectBuilder<EnvBuilder> {
     EnvBuilder(final String name, final String value) {

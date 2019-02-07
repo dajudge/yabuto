@@ -1,6 +1,6 @@
 package com.dajudge.yabuto.k8s.base;
 
-import com.dajudge.ymlgen.api.util.ObjectBuilder;
+import com.dajudge.yabuto.api.util.ObjectBuilder;
 
 public class MetadataObjectBuilder<T extends MetadataObjectBuilder> extends ObjectBuilder<T> {
     public MetadataObjectBuilder(final String name) {

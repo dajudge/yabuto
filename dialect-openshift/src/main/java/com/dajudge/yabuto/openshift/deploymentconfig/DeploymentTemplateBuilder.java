@@ -1,10 +1,9 @@
 package com.dajudge.yabuto.openshift.deploymentconfig;
 
 import com.dajudge.yabuto.k8s.base.MetadataObjectBuilder;
-import com.dajudge.ymlgen.api.features.Builder;
-import com.dajudge.ymlgen.api.util.ObjectBuilder;
+import com.dajudge.yabuto.api.features.Builder;
 
-import static com.dajudge.ymlgen.api.util.SafeCasts.string;
+import static com.dajudge.yabuto.api.util.SafeCasts.string;
 
 class DeploymentTemplateBuilder extends MetadataObjectBuilder<DeploymentTemplateBuilder> {
     DeploymentTemplateBuilder() {

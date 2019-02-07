@@ -1,12 +1,12 @@
 package com.dajudge.yabuto.openshift.route;
 
 import com.dajudge.yabuto.k8s.base.RootObjectBuilder;
-import com.dajudge.ymlgen.api.features.ApiFeature;
-import com.dajudge.ymlgen.api.features.FeatureOwner;
+import com.dajudge.yabuto.api.features.ApiFeature;
+import com.dajudge.yabuto.api.features.FeatureOwner;
 
 import java.util.Map;
 
-import static com.dajudge.ymlgen.api.util.SafeCasts.string;
+import static com.dajudge.yabuto.api.util.SafeCasts.string;
 
 
 public class RouteBuilder extends RootObjectBuilder<RouteBuilder> {

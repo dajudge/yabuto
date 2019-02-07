@@ -1,7 +1,7 @@
 package com.dajudge.yabuto.openshift.deploymentconfig;
 
 import com.dajudge.yabuto.openshift.shared.ImageStreamTagFeature;
-import com.dajudge.ymlgen.api.util.ObjectBuilder;
+import com.dajudge.yabuto.api.util.ObjectBuilder;
 
 class ImageChangeTriggerBuilder extends ObjectBuilder<ImageChangeTriggerBuilder> {
     ImageChangeTriggerBuilder() {

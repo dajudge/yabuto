@@ -1,14 +1,14 @@
 package com.dajudge.yabuto.k8s;
 
 import com.dajudge.yabuto.k8s.deployment.DeploymentBuilder;
-import com.dajudge.ymlgen.api.Dialect;
-import com.dajudge.ymlgen.api.Entrypoint;
-import com.dajudge.ymlgen.api.Project;
-import com.dajudge.ymlgen.api.util.MapBuilder;
+import com.dajudge.yabuto.api.Dialect;
+import com.dajudge.yabuto.api.Entrypoint;
+import com.dajudge.yabuto.api.Project;
+import com.dajudge.yabuto.api.util.MapBuilder;
 
 import java.util.Map;
 
-import static com.dajudge.ymlgen.api.util.ClosureUtil.root;
+import static com.dajudge.yabuto.api.util.ClosureUtil.root;
 
 public class KubernetesDialect implements Dialect {
 

@@ -1,7 +1,7 @@
 package com.dajudge.yabuto.testbase
 
 
-import com.dajudge.ymlgen.api.Entrypoint
+import com.dajudge.yabuto.api.Entrypoint
 
 abstract class AbstractBaseRootObjectBuilderTest {
     static final OBJECT_NAME = "someObjectName"

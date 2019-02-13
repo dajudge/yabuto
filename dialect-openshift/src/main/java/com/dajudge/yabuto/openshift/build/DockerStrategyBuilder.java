@@ -4,13 +4,15 @@ import com.dajudge.yabuto.openshift.shared.DockerImageFeature;
 import com.dajudge.yabuto.openshift.shared.EnvBuilder;
 import com.dajudge.yabuto.api.features.FeatureOwner;
 import com.dajudge.yabuto.api.util.ObjectBuilder;
+import com.dajudge.yabuto.openshift.shared.ImageStreamTagFeature;
 
 public class DockerStrategyBuilder extends ObjectBuilder<DockerStrategyBuilder> {
     private DockerStrategyBuilder() {
         me().simpleValue("type", "type", "Docker", String.class);
         final FeatureOwner dockerStrategy = me().child("dockerStrategy");
         dockerStrategy.child("from")
-                .custom("fromDockerImage", new DockerImageFeature());
+                .custom("fromDockerImage", new DockerImageFeature())
+                .custom("fromImageStreamTag", new ImageStreamTagFeature());
         dockerStrategy.builderList("env", "env", EnvBuilder::create);
     }
 

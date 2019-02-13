@@ -1,5 +1,6 @@
 package com.dajudge.yabuto.openshift.build;
 
+import com.dajudge.yabuto.openshift.shared.DockerImageFeature;
 import com.dajudge.yabuto.openshift.shared.EnvBuilder;
 import com.dajudge.yabuto.openshift.shared.ImageStreamTagFeature;
 import com.dajudge.yabuto.api.features.FeatureOwner;

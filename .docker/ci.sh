@@ -12,13 +12,13 @@ IMG=$(docker build -q ${CI_PROJECT_DIR}/.docker/builder \
     --build-arg https_proxy="$https_proxy" \
     --build-arg no_proxy="$no_proxy")
 
-if [ "" == "${MAVEN_SETTINGS}" ]; then
+if [ "" = "${MAVEN_SETTINGS}" ]; then
     if [ -f "${HOME}/.m2/settings.xm"l ]; then
         MAVEN_SETTINGS=${HOME}/.m2/settings.xml
     fi
 fi
 
-if [ "" == "${MAVEN_HOME}" ]; then
+if [ "" = "${MAVEN_HOME}" ]; then
     if [ -d "${HOME}/.m2" ]; then
         MAVEN_HOME="${HOME}/.m2"
     fi

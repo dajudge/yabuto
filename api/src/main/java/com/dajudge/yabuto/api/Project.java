@@ -10,4 +10,6 @@ public interface Project {
     ClassLoader getClassLoader();
 
     Map<String, String> getParams();
+
+    File emit(String name, Map<String, Object> data);
 }

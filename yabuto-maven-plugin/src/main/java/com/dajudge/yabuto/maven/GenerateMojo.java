@@ -54,21 +54,36 @@ public class GenerateMojo extends AbstractMojo {
                 .collect(toList());
         targetDir.mkdirs();
         for (final File file : files) {
-            final String sourceName = file.getName();
-            final String templateName = sourceName.substring(0, sourceName.length() - EXT.length());
-            final String targetName = templateName + ".yml";
-            try (
-                    final FileOutputStream fos = new FileOutputStream(new File(targetDir, targetName));
-                    final OutputStreamWriter writer = new OutputStreamWriter(fos);
-                    final PrintWriter print = new PrintWriter(writer);
-            ) {
-                final Project project = createProject(cl);
-                final Map<String, Entrypoint> apis = collectApiEndpoints(apiModules, project);
-                evaluate(cl, file, print, apis);
-            } catch (final IOException e) {
+            final Project project = createProject(cl);
+            final Map<String, Entrypoint> apis = collectApiEndpoints(apiModules, project);
+            try {
+                evaluate(cl, file, apis);
+            } catch (final Exception e) {
                 throw new MojoExecutionException("Failed to evaluate template.", e);
             }
         }
+    }
+
+    private File emit(final String templateName, final Map<String, Object> yaml) {
+        if (yaml == null) {
+            return null;
+        }
+        final String targetName = templateName + ".yml";
+        final File targetFile = new File(targetDir, targetName);
+        try (
+                final FileOutputStream fos = new FileOutputStream(targetFile);
+                final OutputStreamWriter writer = new OutputStreamWriter(fos);
+                final PrintWriter print = new PrintWriter(writer);
+        ) {
+            final DumperOptions options = new DumperOptions();
+            options.setIndent(2);
+            options.setPrettyFlow(true);
+            options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+            new Yaml(options).dump(yaml, print);
+        } catch (final IOException e) {
+            throw new RuntimeException("Failed to emit " + targetFile.getAbsolutePath(), e);
+        }
+        return targetFile;
     }
 
     private Project createProject(final ClassLoader cl) {
@@ -86,6 +101,11 @@ public class GenerateMojo extends AbstractMojo {
             @Override
             public Map<String, String> getParams() {
                 return parameters == null ? emptyMap() : new HashMap<>(parameters);
+            }
+
+            @Override
+            public File emit(String name, Map<String, Object> data) {
+                return GenerateMojo.this.emit(name, data);
             }
         };
     }
@@ -114,16 +134,10 @@ public class GenerateMojo extends AbstractMojo {
     private void evaluate(
             final ClassLoader cl,
             final File script,
-            final PrintWriter out,
             final Map<String, Entrypoint> apis
     ) throws MojoExecutionException {
         try {
-            final DumperOptions options = new DumperOptions();
-            options.setIndent(2);
-            options.setPrettyFlow(true);
-            options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-            final Map<String, Object> yaml = YamlBuildScript.run(cl, apis, script);
-            new Yaml(options).dump(yaml, out);
+            YamlBuildScript.run(cl, apis, script);
         } catch (final Exception e) {
             throw new MojoExecutionException("Failed to evaluate " + script.getPath(), e);
         }

@@ -20,7 +20,12 @@ public class PluginDialect implements Dialect {
                 .put("file", params -> file(project, params))
                 .put("classpath", classpath(project.getClassLoader()))
                 .put("params", params(project.getParams()))
+                .put("emit", emit(project))
                 .build();
+    }
+
+    private Entrypoint emit(final Project project) {
+        return p -> project.emit(string(p[0]), (Map<String, Object>)p[1]);
     }
 
     private Entrypoint params(final Map<String, String> params) {

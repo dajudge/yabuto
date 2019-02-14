@@ -45,12 +45,12 @@ public abstract class YamlBuildScript extends Script {
         Script parse(GroovyShell shell) throws IOException;
     }
 
-    static Map<String, Object> run(
+    static Object run(
             final ClassLoader classLoader,
             final Map<String, Entrypoint> apis,
             final File file
     ) throws IOException {
-        return (Map<String, Object>) run(classLoader, apis, shell -> shell.parse(file));
+        return run(classLoader, apis, shell -> shell.parse(file));
     }
 
     private static Object run(

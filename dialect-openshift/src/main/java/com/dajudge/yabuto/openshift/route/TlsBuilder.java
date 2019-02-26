@@ -7,6 +7,7 @@ public class TlsBuilder extends ObjectBuilder<TlsBuilder> {
         me().constant("reencrypt", "termination", "reencrypt");
         me().simpleValue("key", "key", null, String.class);
         me().simpleValue("certificate", "certificate", null, String.class);
+        me().simpleValue("caCertificate", "caCertificate", null, String.class);
         me().simpleValue("destinationCACertificate", "destinationCACertificate", null, String.class);
     }
 

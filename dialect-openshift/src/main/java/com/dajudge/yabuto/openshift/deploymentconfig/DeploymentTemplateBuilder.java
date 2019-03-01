@@ -9,6 +9,7 @@ class DeploymentTemplateBuilder extends MetadataObjectBuilder<DeploymentTemplate
     DeploymentTemplateBuilder() {
         me().child("spec")
                 .builderList("container", "containers", this::createContainerBuilder)
+                .builderList("initContainer", "initContainers", this::createContainerBuilder)
                 .builderList("volume", "volumes", this::createVolumeBuidler);
     }
 

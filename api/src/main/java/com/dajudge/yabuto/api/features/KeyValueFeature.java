@@ -15,7 +15,7 @@ public class KeyValueFeature implements ApiFeature {
 
     @Override
     public void invoke(final Object[] args) {
-        values.put(string(args[0]), args[1]);
+        values.put(string(args[0]), string(args[1]));
     }
 
     @Override

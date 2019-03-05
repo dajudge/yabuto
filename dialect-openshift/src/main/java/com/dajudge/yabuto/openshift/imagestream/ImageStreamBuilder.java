@@ -1,8 +1,10 @@
 package com.dajudge.yabuto.openshift.imagestream;
 
+import com.dajudge.yabuto.api.features.Builder;
 import com.dajudge.yabuto.api.util.ObjectBuilder;
 import com.dajudge.yabuto.k8s.base.RootObjectBuilder;
 import com.dajudge.yabuto.openshift.shared.DockerImageFeature;
+import jdk.nashorn.internal.ir.annotations.Reference;
 
 import static com.dajudge.yabuto.api.util.SafeCasts.string;
 
@@ -19,6 +21,7 @@ public class ImageStreamBuilder extends RootObjectBuilder<ImageStreamBuilder> {
             me().child("from")
                     .custom("fromDockerImage", new DockerImageFeature());
             me().builder("importPolicy", "importPolicy", ImportPolicyBuilder::create);
+            me().builder("referencePolicy", "referencePolicy", ReferencePolicyBuilder::create);
         }
 
         private static TagBuilder create(final Object[] params) {
@@ -34,6 +37,16 @@ public class ImageStreamBuilder extends RootObjectBuilder<ImageStreamBuilder> {
 
         public static ImportPolicyBuilder create(final Object[] params) {
             return new ImportPolicyBuilder();
+        }
+    }
+
+    private static class ReferencePolicyBuilder extends ObjectBuilder<ReferencePolicyBuilder> {
+        private ReferencePolicyBuilder() {
+            me().simpleValue("type", "type", null, String.class);
+        }
+
+        public static ReferencePolicyBuilder create(Object[] params) {
+            return new ReferencePolicyBuilder();
         }
     }
 }

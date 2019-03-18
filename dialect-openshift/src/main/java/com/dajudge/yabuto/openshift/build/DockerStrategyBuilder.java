@@ -14,6 +14,7 @@ public class DockerStrategyBuilder extends ObjectBuilder<DockerStrategyBuilder> 
                 .custom("fromDockerImage", new DockerImageFeature())
                 .custom("fromImageStreamTag", new ImageStreamTagFeature());
         dockerStrategy.builderList("env", "env", EnvBuilder::create);
+        dockerStrategy.builderList("buildArg", "buildArgs", EnvBuilder::create);
     }
 
     static DockerStrategyBuilder create(final Object[] args) {

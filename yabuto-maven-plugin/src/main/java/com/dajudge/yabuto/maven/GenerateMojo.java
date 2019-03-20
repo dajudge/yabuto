@@ -48,6 +48,9 @@ public class GenerateMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
         final ClassLoader cl = createClassLoader();
         final ServiceLoader<Dialect> apiModules = apiModules(cl);
+        if (!templatesDir.isDirectory()) {
+            throw new RuntimeException("Templates directory does not exist: " + templatesDir.getAbsolutePath());
+        }
         final List<File> files = Stream.of(templatesDir.listFiles())
                 .filter(File::isFile)
                 .filter(it -> it.getName().endsWith(EXT))

@@ -97,6 +97,9 @@ public class GenerateMojo extends AbstractMojo {
             }
 
             @Override
+            public File getRootDir() { return GenerateMojo.this.getRootDir(); }
+
+            @Override
             public ClassLoader getClassLoader() {
                 return cl;
             }
@@ -160,5 +163,13 @@ public class GenerateMojo extends AbstractMojo {
         } catch (final MalformedURLException e) {
             throw new RuntimeException("Failed to convert classpath entry to URL.", e);
         }
+    }
+
+    private File getRootDir() {
+        MavenProject rootProject = mavenProject;
+        while (rootProject.getParentFile() != null) {
+            rootProject = rootProject.getParent();
+        }
+        return rootProject.getFile().getParentFile();
     }
 }

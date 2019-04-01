@@ -7,6 +7,8 @@ import java.util.function.Function;
 public interface Project {
     File getTemplatesDir();
 
+    File getRootDir();
+
     ClassLoader getClassLoader();
 
     Map<String, String> getParams();

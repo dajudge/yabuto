@@ -14,14 +14,14 @@ import static com.dajudge.yabuto.api.util.StreamUtil.loadUtf8FromResource;
 
 public abstract class YamlBuildScript extends Script {
     private Map<String, Entrypoint> apis;
-    private ClassLoader scriptClassLoader;
+    private ScriptClasspath scriptClasspath;
 
     @Override
     public Object invokeMethod(String name, Object args) {
         if (name.equals("include")) {
             final String scriptName = ((Object[]) args)[0].toString() + ".groovy";
             try {
-                return run(scriptClassLoader, apis, parserFor(scriptName));
+                return run(scriptClasspath, apis, parserFor(scriptName));
             } catch (IOException e) {
                 throw new RuntimeException("Failed to evaluate library " + scriptName, e);
             }
@@ -38,7 +38,7 @@ public abstract class YamlBuildScript extends Script {
     }
 
     private String load(final String file) {
-        return loadUtf8FromResource(file, scriptClassLoader);
+        return loadUtf8FromResource(file, scriptClasspath.getClassLoader());
     }
 
     private interface Parser {
@@ -46,23 +46,24 @@ public abstract class YamlBuildScript extends Script {
     }
 
     static Object run(
-            final ClassLoader classLoader,
+            final ScriptClasspath scriptClasspath,
             final Map<String, Entrypoint> apis,
             final File file
     ) throws IOException {
-        return run(classLoader, apis, shell -> shell.parse(file));
+        return run(scriptClasspath, apis, shell -> shell.parse(file));
     }
 
     private static Object run(
-            final ClassLoader classLoader,
+            final ScriptClasspath scriptClasspath,
             final Map<String, Entrypoint> apis,
             final Parser parser
     ) throws IOException {
         final CompilerConfiguration config = new CompilerConfiguration();
         config.setScriptBaseClass(YamlBuildScript.class.getName());
-        final GroovyShell shell = new GroovyShell(classLoader, new Binding(), config);
+        config.setClasspathList(scriptClasspath.getEntries());
+        final GroovyShell shell = new GroovyShell(new Binding(), config);
         final YamlBuildScript script = (YamlBuildScript) parser.parse(shell);
-        script.scriptClassLoader = classLoader;
+        script.scriptClasspath = scriptClasspath;
         script.apis = apis;
         return script.run();
     }

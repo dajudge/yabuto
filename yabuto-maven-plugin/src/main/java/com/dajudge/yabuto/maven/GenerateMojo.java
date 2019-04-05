@@ -46,8 +46,8 @@ public class GenerateMojo extends AbstractMojo {
     Map<String, String> parameters;
 
     public void execute() throws MojoExecutionException {
-        final ClassLoader cl = createClassLoader();
-        final ServiceLoader<Dialect> apiModules = apiModules(cl);
+        final ScriptClasspath classpath = createScriptClasspath();
+        final ServiceLoader<Dialect> apiModules = apiModules(classpath.getClassLoader());
         if (!templatesDir.isDirectory()) {
             throw new RuntimeException("Templates directory does not exist: " + templatesDir.getAbsolutePath());
         }
@@ -57,10 +57,10 @@ public class GenerateMojo extends AbstractMojo {
                 .collect(toList());
         targetDir.mkdirs();
         for (final File file : files) {
-            final Project project = createProject(cl);
+            final Project project = createProject(classpath.getClassLoader());
             final Map<String, Entrypoint> apis = collectApiEndpoints(apiModules, project);
             try {
-                evaluate(cl, file, apis);
+                evaluate(classpath, file, apis);
             } catch (final Exception e) {
                 throw new MojoExecutionException("Failed to evaluate template.", e);
             }
@@ -97,7 +97,9 @@ public class GenerateMojo extends AbstractMojo {
             }
 
             @Override
-            public File getRootDir() { return GenerateMojo.this.getRootDir(); }
+            public File getRootDir() {
+                return GenerateMojo.this.getRootDir();
+            }
 
             @Override
             public ClassLoader getClassLoader() {
@@ -116,15 +118,17 @@ public class GenerateMojo extends AbstractMojo {
         };
     }
 
-    private ClassLoader createClassLoader() throws MojoExecutionException {
+    private ScriptClasspath createScriptClasspath() throws MojoExecutionException {
         try {
-            final List<URL> urls = mavenProject.getCompileClasspathElements().stream()
+            final List<String> compileClasspathElements = mavenProject.getCompileClasspathElements();
+            final List<URL> urls = compileClasspathElements.stream()
                     .map(this::toURL)
                     .collect(toList());
-            return new URLClassLoader(
+            final URLClassLoader classLoader = new URLClassLoader(
                     urls.toArray(new URL[urls.size()]),
                     getClass().getClassLoader()
             );
+            return new ScriptClasspath(compileClasspathElements, classLoader);
         } catch (DependencyResolutionRequiredException e) {
             throw new MojoExecutionException("Failed to build script classpath.", e);
         }
@@ -138,12 +142,12 @@ public class GenerateMojo extends AbstractMojo {
     }
 
     private void evaluate(
-            final ClassLoader cl,
+            final ScriptClasspath scriptClasspath,
             final File script,
             final Map<String, Entrypoint> apis
     ) throws MojoExecutionException {
         try {
-            YamlBuildScript.run(cl, apis, script);
+            YamlBuildScript.run(scriptClasspath, apis, script);
         } catch (final Exception e) {
             throw new MojoExecutionException("Failed to evaluate " + script.getPath(), e);
         }
@@ -167,9 +171,19 @@ public class GenerateMojo extends AbstractMojo {
 
     private File getRootDir() {
         MavenProject rootProject = mavenProject;
-        while (rootProject.getParentFile() != null) {
+        while (hasParentOnDisk(rootProject)) {
             rootProject = rootProject.getParent();
         }
         return rootProject.getFile().getParentFile();
+    }
+
+    private boolean hasParentOnDisk(MavenProject rootProject) {
+        if (rootProject.getParentFile() != null) {
+            return true;
+        }
+        if (rootProject.getParent() != null && rootProject.getParent().getFile() != null) {
+            return true;
+        }
+        return false;
     }
 }

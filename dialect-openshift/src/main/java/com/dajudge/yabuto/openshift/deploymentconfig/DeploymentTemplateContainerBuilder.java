@@ -1,8 +1,8 @@
 package com.dajudge.yabuto.openshift.deploymentconfig;
 
+import com.dajudge.yabuto.api.util.ObjectBuilder;
 import com.dajudge.yabuto.openshift.shared.EnvBuilder;
 import com.dajudge.yabuto.openshift.shared.PortBuilder;
-import com.dajudge.yabuto.api.util.ObjectBuilder;
 import com.dajudge.yabuto.openshift.shared.ResourcesBuilder;
 
 import java.util.List;
@@ -25,7 +25,8 @@ class DeploymentTemplateContainerBuilder extends ObjectBuilder<DeploymentTemplat
     private static class VolumeMountBuilder extends ObjectBuilder<VolumeMountBuilder> {
         VolumeMountBuilder(final String name) {
             me().simpleValue("name", "name", name, String.class)
-                    .simpleValue("mountPath", "mountPath", null, String.class);
+                    .simpleValue("mountPath", "mountPath", null, String.class)
+                    .simpleValue("subPath", "subPath", null, String.class);
         }
 
         private static VolumeMountBuilder create(final Object[] params) {

@@ -25,6 +25,8 @@
         <module>dialect-openshift</module>
         <module>dialect-k8s</module>
         <module>dialect-test-base</module>
+        <module>test-support-junit4</module>
+        <module>runtime</module>
     </modules>
 
     <developers>
@@ -158,6 +160,16 @@
                 <artifactId>dialect-test-base</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>test-support-junit4</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>runtime</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!-- 3rd party -->
             <dependency>
@@ -165,6 +177,11 @@
                 <artifactId>groovy-all</artifactId>
                 <version>2.5.3</version>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

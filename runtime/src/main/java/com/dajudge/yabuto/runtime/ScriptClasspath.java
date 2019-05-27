@@ -1,6 +1,5 @@
-package com.dajudge.yabuto.maven;
+package com.dajudge.yabuto.runtime;
 
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.unmodifiableList;

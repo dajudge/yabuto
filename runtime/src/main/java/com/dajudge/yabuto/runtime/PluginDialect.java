@@ -1,4 +1,4 @@
-package com.dajudge.yabuto.maven;
+package com.dajudge.yabuto.runtime;
 
 import com.dajudge.yabuto.api.Dialect;
 import com.dajudge.yabuto.api.Entrypoint;
@@ -26,7 +26,7 @@ public class PluginDialect implements Dialect {
     }
 
     private Entrypoint emit(final Project project) {
-        return p -> project.emit(string(p[0]), (Map<String, Object>)p[1]);
+        return p -> project.emit(string(p[0]), (Map<String, Object>) p[1]);
     }
 
     private Entrypoint params(final Map<String, String> params) {
@@ -35,10 +35,12 @@ public class PluginDialect implements Dialect {
 
     private Entrypoint classpath(final ClassLoader cl) {
         return p -> new BinaryResource() {
+            @Override
             public String text() {
                 return loadUtf8FromResource(p[0].toString(), cl);
             }
 
+            @Override
             public byte[] binary() {
                 return loadBytes(p[0].toString(), () -> cl.getResourceAsStream(p[0].toString()));
             }

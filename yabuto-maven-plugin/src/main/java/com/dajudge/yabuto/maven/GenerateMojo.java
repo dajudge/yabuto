@@ -1,8 +1,8 @@
 package com.dajudge.yabuto.maven;
 
-import com.dajudge.yabuto.api.Dialect;
-import com.dajudge.yabuto.api.Entrypoint;
-import com.dajudge.yabuto.api.Project;
+import com.dajudge.yabuto.runtime.ScriptClasspath;
+import com.dajudge.yabuto.runtime.SimpleEmitter;
+import com.dajudge.yabuto.runtime.YabutoRuntime;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -10,8 +10,6 @@ import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -20,12 +18,10 @@ import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ServiceLoader;
 import java.util.stream.Stream;
 
 import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.StreamSupport.stream;
 import static org.apache.maven.plugins.annotations.ResolutionScope.COMPILE;
 
 @Mojo(
@@ -47,75 +43,35 @@ public class GenerateMojo extends AbstractMojo {
 
     public void execute() throws MojoExecutionException {
         final ScriptClasspath classpath = createScriptClasspath();
-        final ServiceLoader<Dialect> apiModules = apiModules(classpath.getClassLoader());
+        final YabutoRuntime runtime = new YabutoRuntime(
+                classpath,
+                templatesDir,
+                getRootDir(),
+                new SimpleEmitter(targetDir)
+        );
         if (!templatesDir.isDirectory()) {
             throw new RuntimeException("Templates directory does not exist: " + templatesDir.getAbsolutePath());
         }
-        final List<File> files = Stream.of(templatesDir.listFiles())
+        final List<File> files = Stream.of(getTemplateFiles())
                 .filter(File::isFile)
                 .filter(it -> it.getName().endsWith(EXT))
                 .collect(toList());
-        targetDir.mkdirs();
+        final Map<String, String> runtimeParameters = parameters == null ? emptyMap() : new HashMap<>(parameters);
         for (final File file : files) {
-            final Project project = createProject(classpath.getClassLoader());
-            final Map<String, Entrypoint> apis = collectApiEndpoints(apiModules, project);
             try {
-                evaluate(classpath, file, apis);
+                runtime.evaluate(file, runtimeParameters);
             } catch (final Exception e) {
                 throw new MojoExecutionException("Failed to evaluate template.", e);
             }
         }
     }
 
-    private File emit(final String templateName, final Map<String, Object> yaml) {
-        if (yaml == null) {
-            return null;
+    private File[] getTemplateFiles() {
+        final File[] files = templatesDir.listFiles();
+        if (files == null) {
+            return new File[]{};
         }
-        final String targetName = templateName + ".yml";
-        final File targetFile = new File(targetDir, targetName);
-        try (
-                final FileOutputStream fos = new FileOutputStream(targetFile);
-                final OutputStreamWriter writer = new OutputStreamWriter(fos);
-                final PrintWriter print = new PrintWriter(writer);
-        ) {
-            final DumperOptions options = new DumperOptions();
-            options.setIndent(2);
-            options.setPrettyFlow(true);
-            options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-            new Yaml(options).dump(yaml, print);
-        } catch (final IOException e) {
-            throw new RuntimeException("Failed to emit " + targetFile.getAbsolutePath(), e);
-        }
-        return targetFile;
-    }
-
-    private Project createProject(final ClassLoader cl) {
-        return new Project() {
-            @Override
-            public File getTemplatesDir() {
-                return templatesDir;
-            }
-
-            @Override
-            public File getRootDir() {
-                return GenerateMojo.this.getRootDir();
-            }
-
-            @Override
-            public ClassLoader getClassLoader() {
-                return cl;
-            }
-
-            @Override
-            public Map<String, String> getParams() {
-                return parameters == null ? emptyMap() : new HashMap<>(parameters);
-            }
-
-            @Override
-            public File emit(String name, Map<String, Object> data) {
-                return GenerateMojo.this.emit(name, data);
-            }
-        };
+        return files;
     }
 
     private ScriptClasspath createScriptClasspath() throws MojoExecutionException {
@@ -134,32 +90,6 @@ public class GenerateMojo extends AbstractMojo {
         }
     }
 
-    private Map<String, Entrypoint> collectApiEndpoints(ServiceLoader<Dialect> apiModules, Project project) {
-        final Map<String, Entrypoint> apis = new HashMap<>();
-        stream(apiModules.spliterator(), false)
-                .forEach(it -> apis.putAll(it.getEntrypoints(project)));
-        return apis;
-    }
-
-    private void evaluate(
-            final ScriptClasspath scriptClasspath,
-            final File script,
-            final Map<String, Entrypoint> apis
-    ) throws MojoExecutionException {
-        try {
-            YamlBuildScript.run(scriptClasspath, apis, script);
-        } catch (final Exception e) {
-            throw new MojoExecutionException("Failed to evaluate " + script.getPath(), e);
-        }
-    }
-
-    private ServiceLoader<Dialect> apiModules(final ClassLoader cl) throws MojoExecutionException {
-        try {
-            return ServiceLoader.load(Dialect.class, cl);
-        } catch (final Exception e) {
-            throw new MojoExecutionException("Failed to collect API modules.", e);
-        }
-    }
 
     private URL toURL(final String path) {
         try {

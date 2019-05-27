@@ -1,4 +1,4 @@
-package com.dajudge.yabuto.maven;
+package com.dajudge.yabuto.runtime;
 
 import com.dajudge.yabuto.api.Entrypoint;
 import groovy.lang.Binding;
@@ -45,7 +45,7 @@ public abstract class YamlBuildScript extends Script {
         Script parse(GroovyShell shell) throws IOException;
     }
 
-    static Object run(
+    public static Object run(
             final ScriptClasspath scriptClasspath,
             final Map<String, Entrypoint> apis,
             final File file

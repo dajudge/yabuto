@@ -3,8 +3,12 @@ package com.dajudge.yabuto.test.yaml;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Supplier;
+
+import static java.util.Collections.emptyList;
 
 public class YamlObject extends YamlBase {
+    private static final Supplier<YamlList> EMPTY_YAML_LIST = () -> new YamlList(emptyList());
     private final Map<String, Object> yaml;
 
     public YamlObject(final Map<String, Object> yaml) {
@@ -15,19 +19,16 @@ public class YamlObject extends YamlBase {
         return new YamlList((List) safeGet(prop, true, List.class));
     }
 
+    public YamlList list(final String prop, boolean required) {
+        return withFallback(required, () -> list(prop), EMPTY_YAML_LIST);
+    }
+
     public YamlList list(final Function<YamlObject, YamlList> path) {
         return list(path, true);
     }
 
     public YamlList list(final Function<YamlObject, YamlList> path, final boolean required) {
-        try {
-            return path.apply(this);
-        } catch (final AssertionError e) {
-            if (required) {
-                throw e;
-            }
-            return null;
-        }
+        return withFallback(required, () -> path.apply(this), EMPTY_YAML_LIST);
     }
 
     public String string(final String prop) {

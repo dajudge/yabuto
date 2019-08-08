@@ -1,4 +1,4 @@
-package com.dajudge.yabuto.openshift.shared;
+package com.dajudge.yabuto.k8s.shared;
 
 import com.dajudge.yabuto.api.util.ObjectBuilder;
 

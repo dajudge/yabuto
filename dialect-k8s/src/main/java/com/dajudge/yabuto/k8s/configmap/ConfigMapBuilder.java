@@ -1,4 +1,4 @@
-package com.dajudge.yabuto.openshift.configmap;
+package com.dajudge.yabuto.k8s.configmap;
 
 import com.dajudge.yabuto.k8s.base.RootObjectBuilder;
 

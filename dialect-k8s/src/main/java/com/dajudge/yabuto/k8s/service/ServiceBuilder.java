@@ -1,7 +1,7 @@
-package com.dajudge.yabuto.openshift.service;
+package com.dajudge.yabuto.k8s.service;
 
 import com.dajudge.yabuto.k8s.base.RootObjectBuilder;
-import com.dajudge.yabuto.openshift.shared.PortBuilder;
+import com.dajudge.yabuto.k8s.shared.PortBuilder;
 
 public class ServiceBuilder extends RootObjectBuilder<ServiceBuilder> {
     public ServiceBuilder(final String name) {

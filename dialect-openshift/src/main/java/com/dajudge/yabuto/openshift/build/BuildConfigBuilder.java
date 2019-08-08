@@ -2,7 +2,7 @@ package com.dajudge.yabuto.openshift.build;
 
 import com.dajudge.yabuto.k8s.base.RootObjectBuilder;
 import com.dajudge.yabuto.openshift.shared.ImageStreamTagFeature;
-import com.dajudge.yabuto.openshift.shared.ResourcesBuilder;
+import com.dajudge.yabuto.k8s.shared.ResourcesBuilder;
 import com.dajudge.yabuto.api.features.FeatureOwner;
 
 

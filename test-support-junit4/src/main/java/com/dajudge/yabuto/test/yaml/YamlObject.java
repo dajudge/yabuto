@@ -47,8 +47,12 @@ public class YamlObject extends YamlBase {
         return value.equals(safeGet(prop, false, int.class, Integer.class));
     }
 
+    public boolean lacks(final String prop) {
+        return !yaml.containsKey(prop);
+    }
+
     private Object safeGet(final String prop, boolean required, final Class<?>... classes) {
-        if (!yaml.containsKey(prop)) {
+        if (lacks(prop)) {
             if (required) {
                 throw new AssertionError("No property found: " + prop);
             } else {

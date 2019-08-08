@@ -1,8 +1,6 @@
 package com.dajudge.yabuto.openshift.template;
 
 import com.dajudge.yabuto.k8s.base.RootObjectBuilder;
-import com.dajudge.yabuto.openshift.configmap.DataFeature;
-import com.dajudge.yabuto.openshift.shared.EnvBuilder;
 
 import java.util.List;
 

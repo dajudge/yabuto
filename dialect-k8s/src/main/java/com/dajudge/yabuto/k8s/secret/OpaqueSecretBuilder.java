@@ -1,4 +1,4 @@
-package com.dajudge.yabuto.openshift.secret;
+package com.dajudge.yabuto.k8s.secret;
 
 import com.dajudge.yabuto.k8s.base.RootObjectBuilder;
 

@@ -13,7 +13,8 @@ public class EnvBuilder extends ObjectBuilder<EnvBuilder> {
     EnvBuilder(final String name, final String value) {
         me().simpleValue("name", "name", name, String.class);
         me().simpleValue("value", "value", value, String.class);
-        me().custom("fromSecret", new SecretKeyRefFeature());
+        me().custom("fromSecret", new CustomKeyRefFeature("secretKeyRef"));
+        me().custom("fromConfigMap", new CustomKeyRefFeature("configMapKeyRef"));
     }
 
     public static EnvBuilder create(final Object[] params) {
@@ -26,26 +27,32 @@ public class EnvBuilder extends ObjectBuilder<EnvBuilder> {
         return param instanceof String || param instanceof GString;
     }
 
-    private class SecretKeyRefFeature implements ApiFeature {
-        private String secret;
+
+    private class CustomKeyRefFeature implements ApiFeature {
+        private final String refType;
+        private String refName;
         private String key;
+
+        public CustomKeyRefFeature(final String refType) {
+            this.refType = refType;
+        }
 
         @Override
         public void invoke(final Object[] args) {
-            secret = string(args[0]);
+            refName = string(args[0]);
             key = string(args[1]);
         }
 
         @Override
         public void build(final Map<String, Object> target) {
-            if (secret == null || key == null) {
+            if (refName == null || key == null) {
                 return;
             }
-            Map<String, Object> secretKeyRef = new HashMap<>();
-            secretKeyRef.put("name", secret);
-            secretKeyRef.put("key", key);
+            Map<String, Object> keyRef = new HashMap<>();
+            keyRef.put("name", refName);
+            keyRef.put("key", key);
             Map<String, Object> valueFrom = new HashMap<>();
-            valueFrom.put("secretKeyRef", secretKeyRef);
+            valueFrom.put(refType, keyRef);
             target.put("valueFrom", valueFrom);
         }
     }

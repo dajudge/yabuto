@@ -22,7 +22,7 @@ public class PodSpecBuilder extends ObjectBuilder<PodSpecBuilder> {
                 .builderList("env", "env", EnvBuilder::create)
                 .builder("resources", "resources", ResourcesBuilder::create)
                 .builder("livenessProbe", "livenessProbe", ProbeBuilder::create)
-                .builder("readinessProbe", "livenessProbe", ProbeBuilder::create);
+                .builder("readinessProbe", "readinessProbe", ProbeBuilder::create);
     }
 
     private static class VolumeMountBuilder extends ObjectBuilder<VolumeMountBuilder> {

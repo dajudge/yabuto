@@ -10,9 +10,10 @@ import static com.dajudge.yabuto.api.util.SafeCasts.string;
 
 public class DeploymentTemplateVolumeBuilder extends ObjectBuilder<DeploymentTemplateVolumeBuilder> {
     public DeploymentTemplateVolumeBuilder(final String name) {
-        me().simpleValue("name", "name", name, String.class);
-        me().custom("fromConfigMap", new FromFeature("configMap", "name"));
-        me().custom("fromSecret", new FromFeature("secret", "secretName"));
+        me().simpleValue("name", "name", name, String.class)
+                .custom("fromConfigMap", new FromFeature("configMap", "name"))
+                .custom("fromSecret", new FromFeature("secret", "secretName"))
+                .custom("fromPersistentVolumeClaim", new FromFeature("persistentVolumeClaim", "claimName"));
     }
 
     private static class FromFeature implements ApiFeature {
